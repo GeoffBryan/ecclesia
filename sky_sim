@@ -38,21 +38,31 @@ def write_pos(ras, decs):
     for i in range(NSRC):
         print("{0:07d}, {1:12f}, {2:12f}".format(i, ras[i], decs[i]), file=f)
 
-def clip_to_radius:
-    """ Place holder"""
-    print("Place holder function")
+def clip_to_radius(ras,decs, ra, dec,radius):
+    """ Circular radius"""
+    ras_circular=[]
+    decs_circular=[]
+    for i in range(len(ras)):
+        #checks if ra and dec fall inside the circle
+        if (ras[i]-ra)**2  + (decs[i] - dec)**2 < radius**2:
+            ras_circular.append(ras[i])
+            decs.circular.append(decs[i])
+
+    return ras_circular, decs_circular
+
+return ras_circular, decs_circular
 
 def main():
     # from wikipedia
     # Determine Andromeda location in ra/dec degrees
-    Ra = '00:42:44.3'
-    Dec = '41:16:09'
+    Ra = '00:52:44.3'  
+    Dec = '51:16:09'
 
     Ra, Dec = decimal_pos(Ra, Dec)
     
-
     ras, decs = generate_pos(NSRC, Ra, Dec)
-    write_pos(ras, decs)
+    ras_circ, decs_circ = crop_to_circle(ras, decs,ra, dec,1)
+    write_pos(ras_circ, decs_circ)
     
 if __name__ == "__main__":
     main()
