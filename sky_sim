@@ -38,6 +38,10 @@ def write_pos(ras, decs):
     for i in range(NSRC):
         print("{0:07d}, {1:12f}, {2:12f}".format(i, ras[i], decs[i]), file=f)
 
+def clip_to_radius:
+    """ Place holder"""
+    print("Place holder function")
+
 def main():
     # from wikipedia
     # Determine Andromeda location in ra/dec degrees
