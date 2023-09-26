@@ -1,0 +1,56 @@
+#!/usr/bin/env python
+"""
+sky-sim - simulate a sky catalogue centred on Andromeda galaxy M31
+"""
+
+import math as math
+import random as rnd
+
+NSRC = 1_000
+
+def decimal_pos(Ra, Dec):
+    """ Return positions in decimal format """
+    # convert to decimal degrees
+    d, m, s = Dec.split(':')
+    Dec = int(d)+int(m)/60+float(s)/3600
+
+    h, m, s = Ra.split(':')
+    Ra = 15*(int(h)+int(m)/60+float(s)/3600)
+    Ra = Ra/math.cos(Dec*math.pi/180)
+
+    return(Ra, Dec)
+    
+def generate_pos(NSRC, Ra, Dec):
+    """ Generate catlogue positions   """
+    # make 1000 stars within 1 degree of Andromeda
+    ras = []
+    decs = []
+    for i in range(NSRC):
+        ras.append(Ra + rnd.uniform(-1, 1))
+        decs.append(Dec + rnd.uniform(-1, 1))
+
+    return[ras,decs]
+
+def write_pos(ras, decs):
+    """  Write out the positions in the simulated catalogue"""
+    f = open('catalog.csv', 'w')
+    print("id, Ra, Dec", file=f)
+    for i in range(NSRC):
+        print("{0:07d}, {1:12f}, {2:12f}".format(i, ras[i], decs[i]), file=f)
+
+def main():
+    # from wikipedia
+    # Determine Andromeda location in ra/dec degrees
+    Ra = '00:42:44.3'
+    Dec = '41:16:09'
+
+    Ra, Dec = decimal_pos(Ra, Dec)
+    
+
+    ras, decs = generate_pos(NSRC, Ra, Dec)
+    write_pos(ras, decs)
+    
+if __name__ == "__main__":
+    main()
+    
+
