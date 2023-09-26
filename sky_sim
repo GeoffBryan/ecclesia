@@ -35,22 +35,23 @@ def write_pos(ras, decs):
     """  Write out the positions in the simulated catalogue"""
     f = open('catalog.csv', 'w')
     print("id, Ra, Dec", file=f)
-    for i in range(NSRC):
+    for i in range(len(ras)):
         print("{0:07d}, {1:12f}, {2:12f}".format(i, ras[i], decs[i]), file=f)
 
-def clip_to_radius(ras,decs, ra, dec,radius):
+
+def clip_to_radius(ras,decs,Ra,Dec,radius):
     """ Circular radius"""
     ras_circular=[]
     decs_circular=[]
     for i in range(len(ras)):
         #checks if ra and dec fall inside the circle
-        if (ras[i]-ra)**2  + (decs[i] - dec)**2 < radius**2:
+        if (ras[i]-Ra)**2  + (decs[i] - Dec)**2 < radius**2:
             ras_circular.append(ras[i])
-            decs.circular.append(decs[i])
+            decs_circular.append(decs[i])
 
-    return ras_circular, decs_circular
+    return(ras_circular, decs_circular)
 
-return ras_circular, decs_circular
+#return ras_circular, decs_circular
 
 def main():
     # from wikipedia
@@ -61,7 +62,7 @@ def main():
     Ra, Dec = decimal_pos(Ra, Dec)
     
     ras, decs = generate_pos(NSRC, Ra, Dec)
-    ras_circ, decs_circ = crop_to_circle(ras, decs,ra, dec,1)
+    ras_circ, decs_circ = clip_to_radius(ras, decs,Ra, Dec,1)
     write_pos(ras_circ, decs_circ)
     
 if __name__ == "__main__":
