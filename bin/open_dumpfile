@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+""" 
+Simple code to import file name time and scale file
+"""
+
+import numpy as np
+
+#====================
+# Main Python section
+#====================
+#
+if __name__ == '__main__':
+
+    f = open("dumpname.txt","r")
+    framename = f.readline()
+    time = f.readline()
+    scale_factor = f.readline()
+    f.close()
+
+    print("-===== Open_dumpfile: parses the dumpfile ======-","\n")
+
+    print("The frame identifier is:",framename)
+    print("The scale free time parameter is:",time)
+    print("The simulation scale factor is:",scale_factor)
+
